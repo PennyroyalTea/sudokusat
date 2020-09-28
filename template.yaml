@@ -14,6 +14,7 @@ Resources:
   SudokuFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
+      FunctionName: sudoku
       CodeUri: sudoku/
       Handler: app.lambda_handler
       Runtime: python3.8
@@ -26,6 +27,7 @@ Resources:
   TgBotFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: tgbot
       CodeUri: tgbot/
       Handler: app.lambda_handler
       Runtime: python3.8
