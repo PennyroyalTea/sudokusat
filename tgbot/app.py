@@ -1,42 +1,27 @@
+import os
 import json
 
 import requests
 
 
 def lambda_handler(event, context):
-    """Sample pure Lambda function
 
-    Parameters
-    ----------
-    event: dict, required
-        API Gateway Lambda Proxy Input Format
+    api_url = os.environ['SUDOKU_API_URL']
+    bot_token = os.environ['BOT_TOKEN']
 
-        Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
+    body = event['body']
+    message = json.loads(body)['message']
 
-    context: object, required
-        Lambda Context runtime methods and attributes
+    chatId = message['chat']['id']
+    text = message['text']
 
-        Context doc: https://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html
+    result = requests.get(api_url, params={'data':text}).text
 
-    Returns
-    ------
-    API Gateway Lambda Proxy Output Format: dict
-
-        Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
-    """
-
-    try:
-        ip = requests.get("http://checkip.amazonaws.com/")
-    except requests.RequestException as e:
-        # Send some context about this error to Lambda Logs
-        print(e)
-
-        raise e
+    requests.get('https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}'.format(bot_token, chatId, result))
 
     return {
         "statusCode": 200,
         "body": json.dumps({
-            "message": "hello world",
-            "location": ip.text.replace("\n", "")
+            "ok": "1"
         }),
     }
