@@ -32,4 +32,5 @@ to use this api.
 environmental variables in aws web interface: `BOT_TOKEN` is a token of your bot, 
 `SUDOKU_API_URL` is the url of _sudoku_ web app 
 (probably something like `https://{id}.execute-api.{location}.amazonaws.com/Prod/solve`)
+5. Set your [telegram bot webhook](https://core.telegram.org/bots/api#setwebhook) to you _tgbot_ url (probably something like `https://{id}.execute-api.{location}.amazonaws.com/Prod/bot`)
  
